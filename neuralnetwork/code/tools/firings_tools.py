@@ -38,7 +38,7 @@ def exctract_firings(apListVector,maxTime = 0, samplingRate = 1000.):
 	if nAp:
 		actionPots = -1*np.ones([nCells,maxNap])
 		for i,apVector in enumerate(apListVector):
-			for ap in xrange(int(apVector.size())):
+			for ap in range(int(apVector.size())):
 				actionPots[i,ap]=apVector.x[ap]
 		if actionPots.size>0 and computeMaxTime: maxTime = actionPots.max()
 	if computeMaxTime:
@@ -51,7 +51,7 @@ def exctract_firings(apListVector,maxTime = 0, samplingRate = 1000.):
 	actionPots = (actionPots/dt).astype(int)
 	firings = np.zeros([nCells,1+int(maxTime/dt)])
 	if nAp:
-		for i in xrange(nCells):
+		for i in range(nCells):
 			indx = actionPots[i,:]>=0
 			firings[i,actionPots[i,indx]]=1
 
@@ -61,7 +61,7 @@ def exctract_firings(apListVector,maxTime = 0, samplingRate = 1000.):
 	firings = None
 	if rank==0:
 		firings = np.concatenate([firingsAll[0],firingsAll[1]])
-		for i in xrange(2,sizeComm):
+		for i in range(2,sizeComm):
 			firings = np.concatenate([firings,firingsAll[i]])
 	return firings
 
@@ -83,13 +83,13 @@ def compute_mean_firing_rate(firings,samplingRate = 1000.):
 
 		meanFrTemp = np.zeros(nSamples)
 		meanFr = np.zeros(nSamples)
-		for i in xrange(int(interval),nSamples):
+		for i in range(int(interval),nSamples):
 			totAp = firings[:,i-int(interval):i].sum()
 			meanFrTemp[i-int(round(interval/2))]=totAp/nCells*samplingRate/interval
 
 		# Smooth the data with a moving average
 		windowSize = int(25*samplingRate/1000) #ms
-		for i in xrange(windowSize,nSamples):
+		for i in range(windowSize,nSamples):
 			meanFr[i-int(round(windowSize/2))] = meanFrTemp[i-windowSize:i].mean()
 
 	return meanFr
@@ -114,18 +114,18 @@ def synth_rat_emg( firings,samplingRate = 1000.,delay_ms=2):
 		# MUAP duration between 5-10ms (Day et al 2001) -> 7.5 +-1
 		meanLenMUAP = int(7.5/dt)
 		stdLenMUAP = int(1/dt)
-		nS = [int(meanLenMUAP+rnd.gauss(0,stdLenMUAP)) for i in xrange(firings.shape[0])]
-		Amp = [abs(1+rnd.gauss(0,0.2)) for i in xrange(firings.shape[0])]
+		nS = [int(meanLenMUAP+rnd.gauss(0,stdLenMUAP)) for i in range(firings.shape[0])]
+		Amp = [abs(1+rnd.gauss(0,0.2)) for i in range(firings.shape[0])]
 		EMG = np.zeros(nSamples + max(nS)+delay);
 		# create MUAP shape
-		for i in xrange(nCells):
+		for i in range(nCells):
 			n40perc = int(nS[i]*0.4)
 			n60perc = nS[i]-n40perc
 			amplitudeMod = (1-(np.linspace(0,1,nS[i])**2)) * np.concatenate((np.ones(n40perc),1/np.linspace(1,3,n60perc)))
 			logBase = 1.05
 			freqMod = np.log(np.linspace(1,logBase**(4*np.pi),nS[i]))/np.log(logBase)
 			EMG_unit = Amp[i]*amplitudeMod*np.sin(freqMod);
-			for j in xrange(nSamples):
+			for j in range(nSamples):
 				if firings[i,j]==1:
 					EMG[j+delay:j+delay+nS[i]]=EMG[j+delay:j+delay+nS[i]]+EMG_unit
 		EMG = EMG[:nSamples]

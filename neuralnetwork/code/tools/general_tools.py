@@ -58,17 +58,17 @@ def find(pattern, path):
 
 def run_subprocess(program):
 	""" Runs a given program as a subrocess. """
-	print "\tRunning subprocess: %s"%(" ".join(program))
+	print("\tRunning subprocess: %s"%(" ".join(program)))
 	returnCode = None
 	while not returnCode==0:
 		p = subprocess.Popen(program, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		returnCode = None
 		while returnCode is None:
 			message =  p.stdout.readline().rstrip("\n").split()
-			if message != None:print "\t\t"+" ".join(message)+"\t\t"
+			if message != None:print("\t\t"+" ".join(message)+"\t\t")
 			sleep(0.1)
 			returnCode = p.poll()
-		if returnCode != 0: print "\t\t\t\t Error n: ",p.poll()," resetting simulation..."
+		if returnCode != 0: print("\t\t\t\t Error n: ",p.poll()," resetting simulation...")
 
 def resample(dataDict,keys,ratio):
 	for key in keys:

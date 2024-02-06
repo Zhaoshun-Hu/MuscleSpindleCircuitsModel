@@ -84,12 +84,12 @@ class NeuralNetwork():
 						sensorimotorConnections = False
 						sensorimotorMatrix = False
 					elif "Connections" in line:
-						 sensorimotorConnections = True
-						 self._infoInterMuscSensorimotorConnections[dictName]["connections"]=[]
+						sensorimotorConnections = True
+						self._infoInterMuscSensorimotorConnections[dictName]["connections"]=[]
 					elif "WeightsMatrix" in line:
-						 sensorimotorConnections = False
-						 sensorimotorMatrix = True
-						 self._infoInterMuscSensorimotorConnections[dictName]["matrix"]=[]
+						sensorimotorConnections = False
+						sensorimotorMatrix = True
+						self._infoInterMuscSensorimotorConnections[dictName]["matrix"]=[]
 					elif sensorimotorConnections:
 						self._infoInterMuscSensorimotorConnections[dictName]["connections"].append(line.strip("\n").split())
 					elif sensorimotorMatrix:
@@ -407,7 +407,7 @@ class NeuralNetwork():
 				tempApNumberAll = comm.gather(apNumber[muscle][cellName], root=0)
 				if rank==0:
 					apNumber[muscle][cellName] = np.concatenate([tempApNumberAll[0],tempApNumberAll[1]])
-					for i in xrange(2,sizeComm):
+					for i in range(2,sizeComm):
 						apNumber[muscle][cellName] = np.concatenate([apNumber[muscle][cellName],tempApNumberAll[i]])
 				else: apNumber[muscle][cellName]=None
 

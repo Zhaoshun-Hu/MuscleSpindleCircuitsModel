@@ -30,8 +30,8 @@ class CellsRecording(Simulation):
 		Simulation.__init__(self, parallelContext)
 
 		if rank==1:
-			print "\nWarning: mpi execution in this simulation is not supported and therfore useless."
-			print "Only the results of the first process are considered...\n"
+			print("\nWarning: mpi execution in this simulation is not supported and therfore useless.")
+			print("Only the results of the first process are considered...\n")
 
 		self._cells = cells
 		self._modelType = modelType
@@ -59,7 +59,7 @@ class CellsRecording(Simulation):
 
 	def save_results(self):
 		""" Save the simulation results. """
-		print "Not implemented...use the plot method to visualize and save the plots"
+		print("Not implemented...use the plot method to visualize and save the plots")
 
 	def plot(self,name="",title="",block=True):
 		""" Plot the simulation results. """
@@ -84,7 +84,7 @@ class CellsRecording(Simulation):
 
 
 			fileName = time.strftime("%Y_%m_%d_CellsRecording_"+name+".pdf")
-			print self._resultsFolder+fileName
+			print(self._resultsFolder+fileName)
 			plt.savefig(self._resultsFolder+fileName, format="pdf",transparent=True)
 			plt.show(block=block)
 

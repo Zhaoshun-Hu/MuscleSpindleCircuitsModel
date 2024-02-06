@@ -43,7 +43,7 @@ class ForwardSimulation(Simulation):
 		Simulation.__init__(self,parallelContext)
 
 		if rank==1:
-			print "\nMPI execution: the cells are divided in the different hosts\n"
+			print("\nMPI execution: the cells are divided in the different hosts\n")
 
 		self._nn = neuralNetwork
 		self._Iaf = self._nn.get_primary_afferents_names()[0] if self._nn.get_primary_afferents_names() else []
@@ -167,7 +167,7 @@ class ForwardSimulation(Simulation):
 
 	def _extract_results(self,samplingRate = 1000.):
 		""" Extract the simulation results. """
-		if rank==0: print "Extracting the results... ",
+		if rank==0: print("Extracting the results... ",)
 		self._firings = {}
 		self._meanFr = {}
 		self._estimatedEMG = {}
@@ -186,7 +186,7 @@ class ForwardSimulation(Simulation):
 				self._meanFr[muscle][cell] = tlsf.compute_mean_firing_rate(self._firings[muscle][cell],samplingRate)
 				if cell in self._nn.get_motoneurons_names():
 					self._estimatedEMG[muscle][cell] = tlsf.synth_rat_emg(self._firings[muscle][cell],samplingRate)
-		if rank==0: print "...completed."
+		if rank==0: print("...completed.")
 
 	def get_estimated_emg(self,muscleName):
 		emg = [self._estimatedEMG[muscleName][mnName] for mnName in self._Mn]

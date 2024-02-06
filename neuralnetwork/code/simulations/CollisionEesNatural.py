@@ -36,8 +36,8 @@ class CollisionEesNatural(Simulation):
 		Simulation.__init__(self,parallelContext)
 
 		if rank==1:
-			print "\nMPI execution: the different processes have different stimulation starting time."
-			print "The final result is the mean results between each process\n"
+			print("\nMPI execution: the different processes have different stimulation starting time.")
+			print("The final result is the mean results between each process\n")
 
 		# Variables initializations
 		self._eesFrequencies = eesFrequencies
@@ -192,8 +192,8 @@ class CollisionEesNatural(Simulation):
 		if rank==0:
 			Z = np.zeros([len(self._fiberFiringRates),len(self._fiberDelays)])
 			temp = (self._results - percentage)**2
-			for x in xrange(len(self._fiberFiringRates)):
-				for y in xrange(len(self._fiberDelays)):
+			for x in range(len(self._fiberFiringRates)):
+				for y in range(len(self._fiberDelays)):
 					Z[x,y]=self._eesFrequencies[temp[:,y,x].argmin()]
 
 			fig, ax = plt.subplots(figsize=(16,9))

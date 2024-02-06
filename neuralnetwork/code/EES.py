@@ -179,7 +179,7 @@ class EES():
 			nCon = sum(nCon)
 			nOnTot = int(round(percentage*nCon))
 			nOn = np.zeros(sizeComm) + nOnTot/sizeComm
-			for i in xrange(nOnTot%sizeComm): nOn[i]+=1
+			for i in range(nOnTot%sizeComm): nOn[i]+=1
 		nOn = comm.scatter(nOn, root=0)
 
 		ncIndexes = range(len(netcons))
@@ -262,10 +262,10 @@ class EES():
 		to change the stimulation settings. """
 
 		if rank==0 and printFlag:
-			print "The stimulation amplitude is set at: "+str(self._current)+" uA"
-			print "\t"+str(int(self._percIf*100))+"% of primary afferents recruited"
-			print "\t"+str(int(self._percIIf*100))+"% of secondary afferents recruited"
-			print "\t"+str(int(self._percMn*100))+"% of motoneuron recruited"
+			print("The stimulation amplitude is set at: "+str(self._current)+" uA")
+			print("\t"+str(int(self._percIf*100))+"% of primary afferents recruited")
+			print("\t"+str(int(self._percIIf*100))+"% of secondary afferents recruited")
+			print("\t"+str(int(self._percMn*100))+"% of motoneuron recruited")
 
 		return self._current, self._percIf, self._percIIf,	self._percMn
 
@@ -273,7 +273,7 @@ class EES():
 		""" Return the stimulation frequency and print it to screen. """
 		frequency = None
 		if rank==0:
-			if printFlag: print "The stimulation frequency is set at: "+str(self._frequency)+" Hz"
+			if printFlag: print("The stimulation frequency is set at: "+str(self._frequency)+" Hz")
 			frequency = int(round(1000./self._stim.interval))
 		frequency = comm.bcast(frequency,root=0)
 		return frequency
@@ -295,7 +295,7 @@ class EES():
 		if rank==0:
 			nPulses = self._pulses.size()
 			if not nPulses: return None,None
-			pulsesTime = np.array([self._pulses.x[pulseInd] for pulseInd in xrange(int(nPulses))])
+			pulsesTime = np.array([self._pulses.x[pulseInd] for pulseInd in range(int(nPulses))])
 			# exctracting the stim pulses array of 0 and 1
 			dt = 1000./samplingRate
 			pulsesTime = (pulsesTime/dt).astype(int)

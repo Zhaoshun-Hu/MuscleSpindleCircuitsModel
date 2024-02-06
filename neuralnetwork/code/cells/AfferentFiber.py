@@ -52,7 +52,7 @@ class AfferentFiber(Cell):
 		self._refractoryPeriod = rnd.normalvariate(1.6,1.6*noisePerc)
 		if self._refractoryPeriod>1000./self.maxFiringRate:
 			self._refractoryPeriod=1000./self.maxFiringRate
-			print "Warning: refractory period bigger than period between 2 natural pulses"
+			print("Warning: refractory period bigger than period between 2 natural pulses")
 		#Position along the fiber recruited by the stimulation
 		self._stimPosition = self._delay-0.5
 
@@ -160,7 +160,7 @@ class AfferentFiber(Cell):
 			if self._eesSpikes[i] != None:
 				if self._eesSpikes[i] <= -self._refractoryPeriod:
 					self._eesSpikes[i]=None
-					if self._debug: print "\t\tAntidromic spike arrived at origin - refPeriod at time: %f" % (time)
+					if self._debug: print("\t\tAntidromic spike arrived at origin - refPeriod at time: %f" % (time))
 				else: self._eesSpikes[i] -= dt
 
 		#Check whether a new pulse of stimulation occured
@@ -168,7 +168,7 @@ class AfferentFiber(Cell):
 			self.cell.EES=0
 			#check whether the fiber isn't in refractory period
 			if time - self._lastStimPosSpikeTime > self._refractoryPeriod:
-				if self._debug: print "\tStimulation pulse occured at time: %f" % (time)
+				if self._debug: print("\tStimulation pulse occured at time: %f" % (time))
 				self._lastStimPosSpikeTime = time
 				self._fire.event(time+self._delay-self._stimPosition,1)
 				for i in range(len(self._eesSpikes)):
@@ -177,25 +177,25 @@ class AfferentFiber(Cell):
 						break #attention if not found AP of EES is not considered - depends on the size of eesSpikes
 
 		#Check whether a natural spike arrived to the end of the fiber
-		for i in xrange(len(self._naturalSpikes)):
+		for i in range(len(self._naturalSpikes)):
 			if self._naturalSpikes[i]>=self._delay-self._tolerance:
 				self._fire.event(time,1)
 				self._naturalSpikes[i] = None
 				self._nNaturalArrived+=1 # for statistics
-				if self._debug: print "\t\t\tnatural spike arrived at time: %f" % (time)
+				if self._debug: print("\t\t\tnatural spike arrived at time: %f" % (time))
 
 		#update _naturalSpikes
-		for i in xrange(len(self._naturalSpikes)):
+		for i in range(len(self._naturalSpikes)):
 			if self._naturalSpikes[i]==None: continue
 			#check for collision
-			for j in xrange(len(self._eesSpikes)):
+			for j in range(len(self._eesSpikes)):
 				if self._eesSpikes[j]==None: continue
 				if self._naturalSpikes[i]+self.__class__.__updatePeriod > self._eesSpikes[j]-self._tolerance \
 				or self._naturalSpikes[i] < self._eesSpikes[j]+self._tolerance:
 					self._naturalSpikes[i] = None
 					self._eesSpikes[j] = None
 					self._nCollisions+=1
-					if self._debug: print "\t\t\t\tantidromic collision occured at time: %f" % (time)
+					if self._debug: print("\t\t\t\tantidromic collision occured at time: %f" % (time))
 					break
 			#advance natural AP
 			if self._naturalSpikes[i]!=None:
@@ -212,7 +212,7 @@ class AfferentFiber(Cell):
 				if self._naturalSpikes[i]==None:
 					self._naturalSpikes[i]=0
 					self._nNaturalSent+=1
-					if self._debug: print "\tsensory spike generated at time: %f" % (time)
+					if self._debug: print("\tsensory spike generated at time: %f" % (time))
 					break  #attention if not found, AP of EES is not considered - size of naturalSpike
 
 	def get_delay(self):
@@ -322,7 +322,7 @@ if __name__ == '__main__':
 	cell = IntFire()
 	target = cell.cell
 	nAfferents = 100
-	affFibers = [AfferentFiber(5) for x in xrange(nAfferents)]
+	affFibers = [AfferentFiber(5) for x in range(nAfferents)]
 	nc = []
 	for af in affFibers:
 			af.set_firing_rate(0)

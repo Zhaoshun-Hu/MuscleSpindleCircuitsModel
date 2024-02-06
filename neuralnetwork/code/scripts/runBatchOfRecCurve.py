@@ -47,7 +47,7 @@ def main():
 		figNameExtra += "_realMn"
 		programExtra += ["--mnReal"]
 
-	for n in xrange(args.nSim):
+	for n in range(args.nSim):
 
 		resultName = "batchRecCurve_seedn_"+str(n)+"_"+args.outFileName
 		resultFile = gt.find("*"+resultName+".p",pathToResults)
@@ -59,7 +59,7 @@ def main():
 		count+=1
 		if count/args.nSim-percLastPrint>=printPeriod:
 			percLastPrint=count/args.nSim
-			print str(round(count/args.nSim*100))+"% of simulations performed..."
+			print(str(round(count/args.nSim*100))+"% of simulations performed...")
 
 	figName = time.strftime("/%Y_%m_%d_Batch_RecCurve_nSim_"+str(args.nSim)+figNameExtra)
 	plot_rec_curve(args.nSim,figName,args.outFileName)
@@ -69,10 +69,10 @@ def plot_rec_curve(nSimulations,figName,outFileName,showPlot=False):
 
 	mStat = []
 	mSpikes = []
-	for n in xrange(nSimulations):
+	for n in range(nSimulations):
 		name = "batchRecCurve_seedn_"+str(n)+"_"+outFileName
 		resultFile = gt.find("*"+name+".p",pathToResults)
-		if len(resultFile)>1: print "Warning: multiple result files found!!!"
+		if len(resultFile)>1: print("Warning: multiple result files found!!!")
 		with open(resultFile[0], 'r') as pickle_file:
 			mSpikesOneSeed = pickle.load(pickle_file)
 			mEmg = pickle.load(pickle_file)

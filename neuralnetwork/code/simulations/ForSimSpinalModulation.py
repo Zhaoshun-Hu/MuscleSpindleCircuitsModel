@@ -49,8 +49,8 @@ class ForSimSpinalModulation(ForwardSimulation,CellsRecording):
 		"""
 
 		if rank==1:
-			print "\nWarning: mpi execution in this simulation is not supported and therfore useless."
-			print "Only the results of the first process are considered...\n"
+			print("\nWarning: mpi execution in this simulation is not supported and therfore useless.")
+			print("Only the results of the first process are considered...\n")
 		CellsRecording.__init__(self, parallelContext, cells, modelType, tStop)
 
 		ForwardSimulation.__init__(self,parallelContext, neuralNetwork, afferentInput, eesObject, eesModulation, tStop)
@@ -93,7 +93,7 @@ class ForSimSpinalModulation(ForwardSimulation,CellsRecording):
 				cellNameList.reverse()
 				cellClusterName = "_".join(cellNameList)
 				states = self._states[cellNameList[0]]
-				for i in xrange(1,len(cellNameList)): states = np.concatenate((states,self._states[cellNameList[i]]))
+				for i in range(1,len(cellNameList)): states = np.concatenate((states,self._states[cellNameList[i]]))
 				fig, ax = plt.subplots(figsize=(40*sizeFactor,10*sizeFactor))
 				im = ax.imshow(states, cmap=colorMap, interpolation='nearest',origin="lower",vmin = -0, vmax = 1,aspect='auto')
 				ax.set_title("Raster plot: "+name)

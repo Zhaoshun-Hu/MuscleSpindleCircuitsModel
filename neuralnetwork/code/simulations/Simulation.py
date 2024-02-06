@@ -120,9 +120,9 @@ class Simulation:
 		if rank == 0:
 			if h.t-self.__tPrintInfo>=(self.__printPeriod-0.5*self.__integrationStep):
 				if self.__tPrintInfo == 0:
-					print "\nStarting simulation:"
+					print("\nStarting simulation:")
 				self.__tPrintInfo=h.t
-				print "\t"+str(round(h.t))+"ms of "+str(self.__tstop)+"ms integrated..."
+				print("\t"+str(round(h.t))+"ms of "+str(self.__tstop)+"ms integrated...")
 
 	def _end_integration(self):
 		""" Print the total simulation time.
@@ -132,7 +132,7 @@ class Simulation:
 		"""
 		if rank==0:
 			self.simulationTime = time.time()-self._start
-			print "tot simulation time: "+ str(int(self.simulationTime)) + "s"
+			print("tot simulation time: "+ str(int(self.simulationTime)) + "s")
 
 	def run(self):
 		""" Run the simulation. """

@@ -133,7 +133,7 @@ class BurstingEES():
 		""" Return the stimulation frequency and print it to screen. """
 		frequency = None
 		if rank==0:
-			if printFlag: print "The stimulation frequency is set at: "+str(self._frequency)+" Hz"
+			if printFlag: print("The stimulation frequency is set at: "+str(self._frequency)+" Hz")
 			frequency = int(round(1000./self._stim.interval))
 		frequency = comm.bcast(frequency,root=0)
 		return frequency
